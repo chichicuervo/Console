@@ -16,7 +16,7 @@ if (!defined('CONSOLE_LIB')) {
 	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
 }
 
-require_once CONSOLE_LIB . "/Output/OutputFormatterInterface.php";
+require_once CONSOLE_LIB . "/Formatter/OutputFormatterInterface.php";
 
 /**
  * OutputInterface is the interface implemented by all Output classes.

@@ -17,8 +17,8 @@ if (!defined('CONSOLE_LIB')) {
 }
 
 require_once CONSOLE_LIB . "/Output/OutputInterface.php";
-require_once CONSOLE_LIB . "/Output/OutputFormatterInterface.php";
-require_once CONSOLE_LIB . "/Output/OutputFormatter.php";
+require_once CONSOLE_LIB . "/Formatter/OutputFormatterInterface.php";
+require_once CONSOLE_LIB . "/Formatter/OutputFormatter.php";
 
 /**
  * Base class for output classes.
