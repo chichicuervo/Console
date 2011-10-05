@@ -485,7 +485,7 @@ class Console_Application
         $found = array();
         foreach (explode(':', $namespace) as $i => $part) {
             
-        	// TODO - turn fixture into lambda
+        	// TODO - turn closure into lambda
         	
         	$abbrevs = self::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i) { return isset($p[$i]) ? $p[$i] : ''; }, $allNamespaces)))));
 
@@ -725,33 +725,19 @@ class Console_Application
     public function renderException($e, $output)
     {
     	
-    	// TODO - convert fixture to lambda
-    	
-        $strlen = function ($string) {
-            if (!function_exists('mb_strlen')) {
-                return strlen($string);
-            }
-
-            if (false === $encoding = mb_detect_encoding($string)) {
-                return strlen($string);
-            }
-
-            return mb_strlen($string, $encoding);
-        };
-
         do {
             $title = sprintf('  [%s]  ', get_class($e));
-            $len = $strlen($title);
+            $len = $this->strlen($title);
             $lines = array();
             foreach (explode("\n", $e->getMessage()) as $line) {
                 $lines[] = sprintf('  %s  ', $line);
-                $len = max($strlen($line) + 4, $len);
+                $len = max($this->strlen($line) + 4, $len);
             }
 
-            $messages = array(str_repeat(' ', $len), $title.str_repeat(' ', $len - $strlen($title)));
+            $messages = array(str_repeat(' ', $len), $title.str_repeat(' ', $len - $this->strlen($title)));
 
             foreach ($lines as $line) {
-                $messages[] = $line.str_repeat(' ', $len - $strlen($line));
+                $messages[] = $line.str_repeat(' ', $len - $this->strlen($line));
             }
 
             $messages[] = str_repeat(' ', $len);
@@ -851,5 +837,18 @@ class Console_Application
         array_pop($parts);
 
         return implode(':', null === $limit ? $parts : array_slice($parts, 0, $limit));
+    }
+    
+    private function strlen($string)
+    {
+    	if (!function_exists('mb_strlen')) {
+    		return strlen($string);
+    	}
+    	
+    	if (false === $encoding = mb_detect_encoding($string)) {
+    		return strlen($string);
+    	}
+    	
+    	return mb_strlen($string, $encoding);
     }
 }
