@@ -7,13 +7,16 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console;
+// namespace Symfony\Component\Console;
 
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Input\StringInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
+// use Symfony\Component\Console\Application;
+// use Symfony\Component\Console\Input\StringInput;
+// use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * A Shell wraps an Application to add shell capabilities to it.
@@ -23,7 +26,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Shell
+class Console_Shell
 {
     private $application;
     private $history;
@@ -39,15 +42,15 @@ class Shell
      *
      * @throws \RuntimeException When Readline extension is not enabled
      */
-    public function __construct(Application $application)
+    public function __construct(Console_Application $application)
     {
         if (!function_exists('readline')) {
-            throw new \RuntimeException('Unable to start the shell as the Readline extension is not enabled.');
+            throw new RuntimeException('Unable to start the shell as the Readline extension is not enabled.');
         }
 
         $this->application = $application;
         $this->history = getenv('HOME').'/.history_'.$application->getName();
-        $this->output = new ConsoleOutput();
+        $this->output = new Console_Output_ConsoleOutput();
     }
 
     /**
@@ -74,7 +77,7 @@ class Shell
             readline_add_history($command);
             readline_write_history($this->history);
 
-            if (0 !== $ret = $this->application->run(new StringInput($command), $this->output)) {
+            if (0 !== $ret = $this->application->run(new Console_Input_StringInput($command), $this->output)) {
                 $this->output->writeln(sprintf('<error>The command terminated with an error status (%s)</error>', $ret));
             }
         }
