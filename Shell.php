@@ -12,11 +12,13 @@
  * 
  */
 
-// namespace Symfony\Component\Console;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', dirname(__FILE__));
+}
 
-// use Symfony\Component\Console\Application;
-// use Symfony\Component\Console\Input\StringInput;
-// use Symfony\Component\Console\Output\ConsoleOutput;
+require_once CONSOLE_LIB . "/Application.php";
+require_once CONSOLE_LIB . "/Input/StringInput.php";
+require_once CONSOLE_LIB . "/Output/ConsoleOutput.php";
 
 /**
  * A Shell wraps an Application to add shell capabilities to it.

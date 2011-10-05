@@ -12,23 +12,25 @@
  * 
  */
 
-// namespace Symfony\Component\Console;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', dirname(__FILE__));
+}
 
-// use Symfony\Component\Console\Input\InputInterface;
-// use Symfony\Component\Console\Input\ArgvInput;
-// use Symfony\Component\Console\Input\ArrayInput;
-// use Symfony\Component\Console\Input\InputDefinition;
-// use Symfony\Component\Console\Input\InputOption;
-// use Symfony\Component\Console\Input\InputArgument;
-// use Symfony\Component\Console\Output\OutputInterface;
-// use Symfony\Component\Console\Output\Output;
-// use Symfony\Component\Console\Output\ConsoleOutput;
-// use Symfony\Component\Console\Command\Command;
-// use Symfony\Component\Console\Command\HelpCommand;
-// use Symfony\Component\Console\Command\ListCommand;
-// use Symfony\Component\Console\Helper\HelperSet;
-// use Symfony\Component\Console\Helper\FormatterHelper;
-// use Symfony\Component\Console\Helper\DialogHelper;
+require_once CONSOLE_LIB . "/Input/InputInterface.php";
+require_once CONSOLE_LIB . "/Input/ArgvInput.php";
+require_once CONSOLE_LIB . "/Input/ArrayInput.php";
+require_once CONSOLE_LIB . "/Input/InputDefinition.php";
+require_once CONSOLE_LIB . "/Input/InputOption.php";
+require_once CONSOLE_LIB . "/Input/InputArgument.php";
+require_once CONSOLE_LIB . "/Output/OutputInterface.php";
+require_once CONSOLE_LIB . "/Output/Output.php";
+require_once CONSOLE_LIB . "/Output/ConsoleOutput.php";
+require_once CONSOLE_LIB . "/Command/Command.php";
+require_once CONSOLE_LIB . "/Command/HelpCommand.php";
+require_once CONSOLE_LIB . "/Command/ListCommand.php";
+require_once CONSOLE_LIB . "/Helper/HelperSet.php";
+require_once CONSOLE_LIB . "/Helper/FormatterHelper.php";
+require_once CONSOLE_LIB . "/Helper/DialogHelper.php";
 
 /**
  * An Application is the container for a collection of commands.

@@ -12,7 +12,11 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Formatter;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
+
+require_once CONSOLE_LIB . "/Output/OutputFormatterStyleInterface.php";
 
 /**
  * Formatter interface for console output.

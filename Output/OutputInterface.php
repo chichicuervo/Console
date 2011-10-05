@@ -12,9 +12,11 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Output;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// use Symfony\Component\Console\Formatter\OutputFormatterInterface;
+require_once CONSOLE_LIB . "/Output/OutputFormatterInterface.php";
 
 /**
  * OutputInterface is the interface implemented by all Output classes.

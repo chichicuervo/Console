@@ -12,9 +12,12 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Output;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// use Symfony\Component\Console\Formatter\OutputFormatter;
+require_once CONSOLE_LIB . "/Output/StreamOutput.php";
+require_once CONSOLE_LIB . "/Formatter/OutputFormatter.php";
 
 /**
  * ConsoleOutput is the default class for all CLI output. It uses STDOUT.

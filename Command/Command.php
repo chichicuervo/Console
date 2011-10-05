@@ -12,15 +12,17 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Command;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// use Symfony\Component\Console\Input\InputDefinition;
-// use Symfony\Component\Console\Input\InputOption;
-// use Symfony\Component\Console\Input\InputArgument;
-// use Symfony\Component\Console\Input\InputInterface;
-// use Symfony\Component\Console\Output\OutputInterface;
-// use Symfony\Component\Console\Application;
-// use Symfony\Component\Console\Helper\HelperSet;
+require_once CONSOLE_LIB . "/Input/InputDefinition.php";
+require_once CONSOLE_LIB . "/Input/InputOption.php";
+require_once CONSOLE_LIB . "/Input/InputArgument.php";
+require_once CONSOLE_LIB . "/Input/InputInterface.php";
+require_once CONSOLE_LIB . "/Output/OutputInterface.php";
+require_once CONSOLE_LIB . "/Application.php";
+require_once CONSOLE_LIB . "/Helper/HelperSet.php";
 
 /**
  * Base class for all commands.

@@ -12,7 +12,11 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Input;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
+
+require_once CONSOLE_LIB . "/Input/InputDefinition.php";
 
 /**
  * InputInterface is the interface implemented by all input classes.

@@ -12,8 +12,6 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Input;
-
 /**
  * Represents a command line argument.
  *

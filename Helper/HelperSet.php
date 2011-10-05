@@ -12,9 +12,12 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Helper;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// use Symfony\Component\Console\Command\Command;
+require_once CONSOLE_LIB . "/Helper/HelperInterface.php";
+require_once CONSOLE_LIB . "/Command/Command.php";
 
 /**
  * HelperSet represents a set of helpers to be used with a command.

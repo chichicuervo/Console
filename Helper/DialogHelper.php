@@ -12,9 +12,12 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Helper;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// use Symfony\Component\Console\Output\OutputInterface;
+require_once CONSOLE_LIB . "/Helper/Helper.php";
+require_once CONSOLE_LIB . "/Output/OutputInterface.php";
 
 /**
  * The Dialog class provides helpers to interact with the user.

@@ -12,7 +12,11 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Helper;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
+
+require_once CONSOLE_LIB . "/Helper/Helper.php";
 
 /**
  * The Formatter class provides helpers to format messages.

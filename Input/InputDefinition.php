@@ -11,8 +11,12 @@
  * Backported for php5.2 by Jason Belich <jason@belich.com>
  * 
  */
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// namespace Symfony\Component\Console\Input;
+require_once CONSOLE_LIB . "/Input/InputOption.php";
+require_once CONSOLE_LIB . "/Input/InputArgument.php";
 
 /**
  * A InputDefinition represents a set of valid command line arguments and options.

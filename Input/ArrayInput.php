@@ -12,7 +12,12 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Input;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
+
+require_once CONSOLE_LIB . "/Input/Input.php";
+require_once CONSOLE_LIB . "/Input/InputDefinition.php";
 
 /**
  * ArrayInput represents an input provided as an array.

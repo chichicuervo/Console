@@ -11,15 +11,15 @@
  * Backported for php5.2 by Jason Belich <jason@belich.com>
  * 
  */
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// namespace Symfony\Component\Console\Command;
-
-// use Symfony\Component\Console\Input\InputArgument;
-// use Symfony\Component\Console\Input\InputOption;
-// use Symfony\Component\Console\Input\InputInterface;
-// use Symfony\Component\Console\Output\OutputInterface;
-// use Symfony\Component\Console\Output\Output;
-// use Symfony\Component\Console\Command\Command;
+require_once CONSOLE_LIB . "/Input/InputArgument.php";
+require_once CONSOLE_LIB . "/Input/InputOption.php";
+require_once CONSOLE_LIB . "/Input/InputInterface.php";
+require_once CONSOLE_LIB . "/Output/OutputInterface.php";
+require_once CONSOLE_LIB . "/Command/Command.php";
 
 /**
  * HelpCommand displays the help for a given command.

@@ -12,11 +12,13 @@
  * 
  */
 
-// namespace Symfony\Component\Console\Tester;
+if (!defined('CONSOLE_LIB')) {
+	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
+}
 
-// use Symfony\Component\Console\Application;
-// use Symfony\Component\Console\Input\ArrayInput;
-// use Symfony\Component\Console\Output\StreamOutput;
+require_once CONSOLE_LIB . "/Application.php";
+require_once CONSOLE_LIB . "/Output/StreamOutput.php";
+require_once CONSOLE_LIB . "/Input/ArrayInput.php";
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
