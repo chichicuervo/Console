@@ -16,9 +16,9 @@ if (!defined('CONSOLE_LIB')) {
 	define('CONSOLE_LIB', realpath(dirname(__FILE__) . "/.."));
 }
 
-require_once CONSOLE_LIB . "/Output/OutputFormatterInterface.php";
-require_once CONSOLE_LIB . "/Output/OutputFormatterStyleInterface.php";
-require_once CONSOLE_LIB . "/Output/OutputFormatterStyle.php";
+require_once CONSOLE_LIB . "/Formatter/OutputFormatterInterface.php";
+require_once CONSOLE_LIB . "/Formatter/OutputFormatterStyleInterface.php";
+require_once CONSOLE_LIB . "/Formatter/OutputFormatterStyle.php";
 
 /**
  * Formatter class for console output.
