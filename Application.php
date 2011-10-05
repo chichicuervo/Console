@@ -7,25 +7,28 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console;
+// namespace Symfony\Component\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Command\HelpCommand;
-use Symfony\Component\Console\Command\ListCommand;
-use Symfony\Component\Console\Helper\HelperSet;
-use Symfony\Component\Console\Helper\FormatterHelper;
-use Symfony\Component\Console\Helper\DialogHelper;
+// use Symfony\Component\Console\Input\InputInterface;
+// use Symfony\Component\Console\Input\ArgvInput;
+// use Symfony\Component\Console\Input\ArrayInput;
+// use Symfony\Component\Console\Input\InputDefinition;
+// use Symfony\Component\Console\Input\InputOption;
+// use Symfony\Component\Console\Input\InputArgument;
+// use Symfony\Component\Console\Output\OutputInterface;
+// use Symfony\Component\Console\Output\Output;
+// use Symfony\Component\Console\Output\ConsoleOutput;
+// use Symfony\Component\Console\Command\Command;
+// use Symfony\Component\Console\Command\HelpCommand;
+// use Symfony\Component\Console\Command\ListCommand;
+// use Symfony\Component\Console\Helper\HelperSet;
+// use Symfony\Component\Console\Helper\FormatterHelper;
+// use Symfony\Component\Console\Helper\DialogHelper;
 
 /**
  * An Application is the container for a collection of commands.
@@ -44,7 +47,7 @@ use Symfony\Component\Console\Helper\DialogHelper;
  *
  * @api
  */
-class Application
+class Console_Application
 {
     private $commands;
     private $wantHelps = false;
@@ -71,24 +74,24 @@ class Application
         $this->catchExceptions = true;
         $this->autoExit = true;
         $this->commands = array();
-        $this->helperSet = new HelperSet(array(
-            new FormatterHelper(),
-            new DialogHelper(),
+        $this->helperSet = new Console_Helper_HelperSet(array(
+            new Console_Helper_FormatterHelper(),
+            new Console_Helper_DialogHelper(),
         ));
 
-        $this->add(new HelpCommand());
-        $this->add(new ListCommand());
+        $this->add(new Console_Command_HelpCommand());
+        $this->add(new Console_Command_ListCommand());
 
-        $this->definition = new InputDefinition(array(
-            new InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
+        $this->definition = new Console_Input_InputDefinition(array(
+            new Console_Input_InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
 
-            new InputOption('--help',           '-h', InputOption::VALUE_NONE, 'Display this help message.'),
-            new InputOption('--quiet',          '-q', InputOption::VALUE_NONE, 'Do not output any message.'),
-            new InputOption('--verbose',        '-v', InputOption::VALUE_NONE, 'Increase verbosity of messages.'),
-            new InputOption('--version',        '-V', InputOption::VALUE_NONE, 'Display this program version.'),
-            new InputOption('--ansi',           '',   InputOption::VALUE_NONE, 'Force ANSI output.'),
-            new InputOption('--no-ansi',        '',   InputOption::VALUE_NONE, 'Disable ANSI output.'),
-            new InputOption('--no-interaction', '-n', InputOption::VALUE_NONE, 'Do not ask any interactive question.'),
+            new Console_Input_InputOption('--help',           '-h', Console_Input_InputOption::VALUE_NONE, 'Display this help message.'),
+            new Console_Input_InputOption('--quiet',          '-q', Console_Input_InputOption::VALUE_NONE, 'Do not output any message.'),
+            new Console_Input_InputOption('--verbose',        '-v', Console_Input_InputOption::VALUE_NONE, 'Increase verbosity of messages.'),
+            new Console_Input_InputOption('--version',        '-V', Console_Input_InputOption::VALUE_NONE, 'Display this program version.'),
+            new Console_Input_InputOption('--ansi',           '',   Console_Input_InputOption::VALUE_NONE, 'Force ANSI output.'),
+            new Console_Input_InputOption('--no-ansi',        '',   Console_Input_InputOption::VALUE_NONE, 'Disable ANSI output.'),
+            new Console_Input_InputOption('--no-interaction', '-n', Console_Input_InputOption::VALUE_NONE, 'Do not ask any interactive question.'),
         ));
     }
 
@@ -104,19 +107,19 @@ class Application
      *
      * @api
      */
-    public function run(InputInterface $input = null, OutputInterface $output = null)
+    public function run(Console_Input_InputInterface $input = null, Console_Output_OutputInterface $output = null)
     {
         if (null === $input) {
-            $input = new ArgvInput();
+            $input = new Console_Input_ArgvInput();
         }
 
         if (null === $output) {
-            $output = new ConsoleOutput();
+            $output = new Console_Output_ConsoleOutput();
         }
 
         try {
             $statusCode = $this->doRun($input, $output);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if (!$this->catchExceptions) {
                 throw $e;
             }
@@ -147,7 +150,7 @@ class Application
      *
      * @return integer 0 if everything went fine, or an error code
      */
-    public function doRun(InputInterface $input, OutputInterface $output)
+    public function doRun(Console_Input_InputInterface $input, Console_Output_OutputInterface $output)
     {
         $name = $this->getCommandName($input);
 
@@ -160,7 +163,7 @@ class Application
         if (true === $input->hasParameterOption(array('--help', '-h'))) {
             if (!$name) {
                 $name = 'help';
-                $input = new ArrayInput(array('command' => 'help'));
+                $input = new Console_Input_ArrayInput(array('command' => 'help'));
             } else {
                 $this->wantHelps = true;
             }
@@ -171,9 +174,9 @@ class Application
         }
 
         if (true === $input->hasParameterOption(array('--quiet', '-q'))) {
-            $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
+            $output->setVerbosity(Console_Output_OutputInterface::VERBOSITY_QUIET);
         } elseif (true === $input->hasParameterOption(array('--verbose', '-v'))) {
-            $output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+            $output->setVerbosity(Console_Output_OutputInterface::VERBOSITY_VERBOSE);
         }
 
         if (true === $input->hasParameterOption(array('--version', '-V'))) {
@@ -184,7 +187,7 @@ class Application
 
         if (!$name) {
             $name = 'list';
-            $input = new ArrayInput(array('command' => 'list'));
+            $input = new Console_Input_ArrayInput(array('command' => 'list'));
         }
 
         // the command name MUST be the first element of the input
@@ -204,7 +207,7 @@ class Application
      *
      * @api
      */
-    public function setHelperSet(HelperSet $helperSet)
+    public function setHelperSet(Console_Helper_HelperSet $helperSet)
     {
         $this->helperSet = $helperSet;
     }
@@ -356,7 +359,7 @@ class Application
      */
     public function register($name)
     {
-        return $this->add(new Command($name));
+        return $this->add(new Console_Command_Command($name));
     }
 
     /**
@@ -384,7 +387,7 @@ class Application
      *
      * @api
      */
-    public function add(Command $command)
+    public function add(Console_Command_Command $command)
     {
         $command->setApplication($this);
 
@@ -411,7 +414,7 @@ class Application
     public function get($name)
     {
         if (!isset($this->commands[$name])) {
-            throw new \InvalidArgumentException(sprintf('The command "%s" does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The command "%s" does not exist.', $name));
         }
 
         $command = $this->commands[$name];
@@ -481,14 +484,17 @@ class Application
 
         $found = array();
         foreach (explode(':', $namespace) as $i => $part) {
-            $abbrevs = static::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i) { return isset($p[$i]) ? $p[$i] : ''; }, $allNamespaces)))));
+            
+        	// TODO - turn fixture into lambda
+        	
+        	$abbrevs = self::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i) { return isset($p[$i]) ? $p[$i] : ''; }, $allNamespaces)))));
 
             if (!isset($abbrevs[$part])) {
-                throw new \InvalidArgumentException(sprintf('There are no commands defined in the "%s" namespace.', $namespace));
+                throw new InvalidArgumentException(sprintf('There are no commands defined in the "%s" namespace.', $namespace));
             }
 
             if (count($abbrevs[$part]) > 1) {
-                throw new \InvalidArgumentException(sprintf('The namespace "%s" is ambiguous (%s).', $namespace, $this->getAbbreviationSuggestions($abbrevs[$namespace])));
+                throw new InvalidArgumentException(sprintf('The namespace "%s" is ambiguous (%s).', $namespace, $this->getAbbreviationSuggestions($abbrevs[$namespace])));
             }
 
             $found[] = $abbrevs[$part][0];
@@ -529,7 +535,7 @@ class Application
             }
         }
 
-        $abbrevs = static::getAbbreviations(array_unique($commands));
+        $abbrevs = self::getAbbreviations(array_unique($commands));
         if (isset($abbrevs[$searchName]) && 1 == count($abbrevs[$searchName])) {
             return $this->get($abbrevs[$searchName][0]);
         }
@@ -537,7 +543,7 @@ class Application
         if (isset($abbrevs[$searchName]) && count($abbrevs[$searchName]) > 1) {
             $suggestions = $this->getAbbreviationSuggestions($abbrevs[$searchName]);
 
-            throw new \InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $name, $suggestions));
+            throw new InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $name, $suggestions));
         }
 
         // aliases
@@ -550,13 +556,13 @@ class Application
             }
         }
 
-        $abbrevs = static::getAbbreviations(array_unique($aliases));
+        $abbrevs = self::getAbbreviations(array_unique($aliases));
         if (!isset($abbrevs[$searchName])) {
-            throw new \InvalidArgumentException(sprintf('Command "%s" is not defined.', $name));
+            throw new InvalidArgumentException(sprintf('Command "%s" is not defined.', $name));
         }
 
         if (count($abbrevs[$searchName]) > 1) {
-            throw new \InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $name, $this->getAbbreviationSuggestions($abbrevs[$searchName])));
+            throw new InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $name, $this->getAbbreviationSuggestions($abbrevs[$searchName])));
         }
 
         return $this->get($abbrevs[$searchName][0]);
@@ -668,7 +674,7 @@ class Application
     {
         $commands = $namespace ? $this->all($this->findNamespace($namespace)) : $this->commands;
 
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
         $dom->appendChild($xml = $dom->createElement('symfony'));
 
@@ -718,6 +724,9 @@ class Application
      */
     public function renderException($e, $output)
     {
+    	
+    	// TODO - convert fixture to lambda
+    	
         $strlen = function ($string) {
             if (!function_exists('mb_strlen')) {
                 return strlen($string);
@@ -753,7 +762,7 @@ class Application
             }
             $output->writeln("\n");
 
-            if (OutputInterface::VERBOSITY_VERBOSE === $output->getVerbosity()) {
+            if (Console_Output_OutputInterface::VERBOSITY_VERBOSE === $output->getVerbosity()) {
                 $output->writeln('<comment>Exception trace:</comment>');
 
                 // exception related properties
@@ -792,7 +801,7 @@ class Application
      *
      * @return string The command name
      */
-    protected function getCommandName(InputInterface $input)
+    protected function getCommandName(Console_Input_InputInterface $input)
     {
         return $input->getFirstArgument('command');
     }
