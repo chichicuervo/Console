@@ -7,18 +7,21 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Tester;
+// namespace Symfony\Component\Console\Tester;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\StreamOutput;
+// use Symfony\Component\Console\Command\Command;
+// use Symfony\Component\Console\Input\ArrayInput;
+// use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class CommandTester
+class Console_Tester_CommandTester
 {
     private $command;
     private $input;
@@ -29,7 +32,7 @@ class CommandTester
      *
      * @param Command $command A Command instance to test.
      */
-    public function __construct(Command $command)
+    public function __construct(Console_Command_Command $command)
     {
         $this->command = $command;
     }
@@ -50,12 +53,12 @@ class CommandTester
      */
     public function execute(array $input, array $options = array())
     {
-        $this->input = new ArrayInput($input);
+        $this->input = new Console_Input_ArrayInput($input);
         if (isset($options['interactive'])) {
             $this->input->setInteractive($options['interactive']);
         }
 
-        $this->output = new StreamOutput(fopen('php://memory', 'w', false));
+        $this->output = new Console_Output_StreamOutput(fopen('php://memory', 'w', false));
         if (isset($options['decorated'])) {
             $this->output->setDecorated($options['decorated']);
         }
