@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * Represents a command line argument.
@@ -18,7 +21,7 @@ namespace Symfony\Component\Console\Input;
  *
  * @api
  */
-class InputArgument
+class Console_Input_InputArgument
 {
     const REQUIRED = 1;
     const OPTIONAL = 2;
@@ -46,7 +49,7 @@ class InputArgument
         if (null === $mode) {
             $mode = self::OPTIONAL;
         } else if (is_string($mode) || $mode > 7) {
-            throw new \InvalidArgumentException(sprintf('Argument mode "%s" is not valid.', $mode));
+            throw new InvalidArgumentException(sprintf('Argument mode "%s" is not valid.', $mode));
         }
 
         $this->name        = $name;
@@ -96,14 +99,14 @@ class InputArgument
     public function setDefault($default = null)
     {
         if (self::REQUIRED === $this->mode && null !== $default) {
-            throw new \LogicException('Cannot set a default value except for Parameter::OPTIONAL mode.');
+            throw new LogicException('Cannot set a default value except for Parameter::OPTIONAL mode.');
         }
 
         if ($this->isArray()) {
             if (null === $default) {
                 $default = array();
             } else if (!is_array($default)) {
-                throw new \LogicException('A default value for an array argument must be an array.');
+                throw new LogicException('A default value for an array argument must be an array.');
             }
         }
 

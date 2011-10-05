@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * A InputDefinition represents a set of valid command line arguments and options.
@@ -25,7 +28,7 @@ namespace Symfony\Component\Console\Input;
  *
  * @api
  */
-class InputDefinition
+class Console_Input_InputDefinition
 {
     private $arguments;
     private $requiredCount;
@@ -58,7 +61,7 @@ class InputDefinition
         $arguments = array();
         $options = array();
         foreach ($definition as $item) {
-            if ($item instanceof InputOption) {
+            if ($item instanceof Console_Input_InputOption) {
                 $options[] = $item;
             } else {
                 $arguments[] = $item;
@@ -110,18 +113,18 @@ class InputDefinition
      *
      * @api
      */
-    public function addArgument(InputArgument $argument)
+    public function addArgument(Console_Input_InputArgument $argument)
     {
         if (isset($this->arguments[$argument->getName()])) {
-            throw new \LogicException(sprintf('An argument with name "%s" already exist.', $argument->getName()));
+            throw new LogicException(sprintf('An argument with name "%s" already exist.', $argument->getName()));
         }
 
         if ($this->hasAnArrayArgument) {
-            throw new \LogicException('Cannot add an argument after an array argument.');
+            throw new LogicException('Cannot add an argument after an array argument.');
         }
 
         if ($argument->isRequired() && $this->hasOptional) {
-            throw new \LogicException('Cannot add a required argument after an optional one.');
+            throw new LogicException('Cannot add a required argument after an optional one.');
         }
 
         if ($argument->isArray()) {
@@ -153,7 +156,7 @@ class InputDefinition
         $arguments = is_int($name) ? array_values($this->arguments) : $this->arguments;
 
         if (!$this->hasArgument($name)) {
-            throw new \InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
         }
 
         return $arguments[$name];
@@ -262,9 +265,9 @@ class InputDefinition
     public function addOption(InputOption $option)
     {
         if (isset($this->options[$option->getName()])) {
-            throw new \LogicException(sprintf('An option named "%s" already exist.', $option->getName()));
+            throw new LogicException(sprintf('An option named "%s" already exist.', $option->getName()));
         } else if (isset($this->shortcuts[$option->getShortcut()])) {
-            throw new \LogicException(sprintf('An option with shortcut "%s" already exist.', $option->getShortcut()));
+            throw new LogicException(sprintf('An option with shortcut "%s" already exist.', $option->getShortcut()));
         }
 
         $this->options[$option->getName()] = $option;
@@ -285,7 +288,7 @@ class InputDefinition
     public function getOption($name)
     {
         if (!$this->hasOption($name)) {
-            throw new \InvalidArgumentException(sprintf('The "--%s" option does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "--%s" option does not exist.', $name));
         }
 
         return $this->options[$name];
@@ -368,7 +371,7 @@ class InputDefinition
     private function shortcutToName($shortcut)
     {
         if (!isset($this->shortcuts[$shortcut])) {
-            throw new \InvalidArgumentException(sprintf('The "-%s" option does not exist.', $shortcut));
+            throw new InvalidArgumentException(sprintf('The "-%s" option does not exist.', $shortcut));
         }
 
         return $this->shortcuts[$shortcut];
@@ -477,7 +480,7 @@ class InputDefinition
      */
     public function asXml($asDom = false)
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
         $dom->appendChild($definitionXML = $dom->createElement('definition'));
 

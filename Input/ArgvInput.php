@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * ArgvInput represents an input coming from the CLI arguments.
@@ -38,7 +41,7 @@ namespace Symfony\Component\Console\Input;
  *
  * @api
  */
-class ArgvInput extends Input
+class Console_Input_ArgvInput extends Console_Input_Input
 {
     private $tokens;
     private $parsed;
@@ -51,7 +54,7 @@ class ArgvInput extends Input
      *
      * @api
      */
-    public function __construct(array $argv = null, InputDefinition $definition = null)
+    public function __construct(array $argv = null, Console_Input_InputDefinition $definition = null)
     {
         if (null === $argv) {
             $argv = $_SERVER['argv'];
@@ -120,7 +123,7 @@ class ArgvInput extends Input
         $len = strlen($name);
         for ($i = 0; $i < $len; $i++) {
             if (!$this->definition->hasShortcut($name[$i])) {
-                throw new \RuntimeException(sprintf('The "-%s" option does not exist.', $name[$i]));
+                throw new RuntimeException(sprintf('The "-%s" option does not exist.', $name[$i]));
             }
 
             $option = $this->definition->getOptionForShortcut($name[$i]);
@@ -173,7 +176,7 @@ class ArgvInput extends Input
 
         // unexpected argument
         } else {
-            throw new \RuntimeException('Too many arguments.');
+            throw new RuntimeException('Too many arguments.');
         }
     }
 
@@ -188,7 +191,7 @@ class ArgvInput extends Input
     private function addShortOption($shortcut, $value)
     {
         if (!$this->definition->hasShortcut($shortcut)) {
-            throw new \RuntimeException(sprintf('The "-%s" option does not exist.', $shortcut));
+            throw new RuntimeException(sprintf('The "-%s" option does not exist.', $shortcut));
         }
 
         $this->addLongOption($this->definition->getOptionForShortcut($shortcut)->getName(), $value);
@@ -205,7 +208,7 @@ class ArgvInput extends Input
     private function addLongOption($name, $value)
     {
         if (!$this->definition->hasOption($name)) {
-            throw new \RuntimeException(sprintf('The "--%s" option does not exist.', $name));
+            throw new RuntimeException(sprintf('The "--%s" option does not exist.', $name));
         }
 
         $option = $this->definition->getOption($name);
@@ -223,7 +226,7 @@ class ArgvInput extends Input
 
         if (null === $value) {
             if ($option->isValueRequired()) {
-                throw new \RuntimeException(sprintf('The "--%s" option requires a value.', $name));
+                throw new RuntimeException(sprintf('The "--%s" option requires a value.', $name));
             }
 
             $value = $option->isValueOptional() ? $option->getDefault() : true;

@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * StringInput represents an input provided as a string.
@@ -22,7 +25,7 @@ namespace Symfony\Component\Console\Input;
  *
  * @api
  */
-class StringInput extends ArgvInput
+class Console_Input_StringInput extends Console_Input_ArgvInput
 {
     const REGEX_STRING = '([^ ]+?)(?: |(?<!\\\\)"|(?<!\\\\)\'|$)';
     const REGEX_QUOTED_STRING = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
@@ -35,7 +38,7 @@ class StringInput extends ArgvInput
      *
      * @api
      */
-    public function __construct($input, InputDefinition $definition = null)
+    public function __construct($input, Console_Input_InputDefinition $definition = null)
     {
         parent::__construct(array(), $definition);
 
@@ -66,7 +69,7 @@ class StringInput extends ArgvInput
             } else {
                 // should never happen
                 // @codeCoverageIgnoreStart
-                throw new \InvalidArgumentException(sprintf('Unable to parse input near "... %s ..."', substr($input, $cursor, 10)));
+                throw new InvalidArgumentException(sprintf('Unable to parse input near "... %s ..."', substr($input, $cursor, 10)));
                 // @codeCoverageIgnoreEnd
             }
 

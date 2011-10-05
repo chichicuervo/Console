@@ -7,16 +7,19 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * InputInterface is the interface implemented by all input classes.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-interface InputInterface
+interface Console_Input_InputInterface
 {
     /**
      * Returns the first argument from the raw parameters (not parsed).
@@ -55,7 +58,7 @@ interface InputInterface
      *
      * @param InputDefinition $definition A InputDefinition instance
      */
-    function bind(InputDefinition $definition);
+    function bind(Console_Input_InputDefinition $definition);
 
     /**
      * Validate if arguments given are correct.

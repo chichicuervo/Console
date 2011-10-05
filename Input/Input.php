@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * Input is the base class for all concrete Input classes.
@@ -22,7 +25,7 @@ namespace Symfony\Component\Console\Input;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class Input implements InputInterface
+abstract class Console_Input_Input implements Console_Input_InputInterface
 {
     protected $definition;
     protected $options;
@@ -34,10 +37,10 @@ abstract class Input implements InputInterface
      *
      * @param InputDefinition $definition A InputDefinition instance
      */
-    public function __construct(InputDefinition $definition = null)
+    public function __construct(Console_Input_InputDefinition $definition = null)
     {
         if (null === $definition) {
-            $this->definition = new InputDefinition();
+            $this->definition = new Console_Input_InputDefinition();
         } else {
             $this->bind($definition);
             $this->validate();
@@ -49,7 +52,7 @@ abstract class Input implements InputInterface
      *
      * @param InputDefinition $definition A InputDefinition instance
      */
-    public function bind(InputDefinition $definition)
+    public function bind(Console_Input_InputDefinition $definition)
     {
         $this->arguments = array();
         $this->options = array();
@@ -71,7 +74,7 @@ abstract class Input implements InputInterface
     public function validate()
     {
         if (count($this->arguments) < $this->definition->getArgumentRequiredCount()) {
-            throw new \RuntimeException('Not enough arguments.');
+            throw new RuntimeException('Not enough arguments.');
         }
     }
 
@@ -117,7 +120,7 @@ abstract class Input implements InputInterface
     public function getArgument($name)
     {
         if (!$this->definition->hasArgument($name)) {
-            throw new \InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
         }
 
         return isset($this->arguments[$name]) ? $this->arguments[$name] : $this->definition->getArgument($name)->getDefault();
@@ -134,7 +137,7 @@ abstract class Input implements InputInterface
     public function setArgument($name, $value)
     {
         if (!$this->definition->hasArgument($name)) {
-            throw new \InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
         }
 
         $this->arguments[$name] = $value;
@@ -174,7 +177,7 @@ abstract class Input implements InputInterface
     public function getOption($name)
     {
         if (!$this->definition->hasOption($name)) {
-            throw new \InvalidArgumentException(sprintf('The "%s" option does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "%s" option does not exist.', $name));
         }
 
         return isset($this->options[$name]) ? $this->options[$name] : $this->definition->getOption($name)->getDefault();
@@ -191,7 +194,7 @@ abstract class Input implements InputInterface
     public function setOption($name, $value)
     {
         if (!$this->definition->hasOption($name)) {
-            throw new \InvalidArgumentException(sprintf('The "%s" option does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "%s" option does not exist.', $name));
         }
 
         $this->options[$name] = $value;

@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * ArrayInput represents an input provided as an array.
@@ -22,7 +25,7 @@ namespace Symfony\Component\Console\Input;
  *
  * @api
  */
-class ArrayInput extends Input
+class Console_Input_ArrayInput extends Console_Input_Input
 {
     private $parameters;
 
@@ -34,7 +37,7 @@ class ArrayInput extends Input
      *
      * @api
      */
-    public function __construct(array $parameters, InputDefinition $definition = null)
+    public function __construct(array $parameters, Console_Input_InputDefinition $definition = null)
     {
         $this->parameters = $parameters;
 
@@ -137,7 +140,7 @@ class ArrayInput extends Input
     private function addShortOption($shortcut, $value)
     {
         if (!$this->definition->hasShortcut($shortcut)) {
-            throw new \InvalidArgumentException(sprintf('The "-%s" option does not exist.', $shortcut));
+            throw new InvalidArgumentException(sprintf('The "-%s" option does not exist.', $shortcut));
         }
 
         $this->addLongOption($this->definition->getOptionForShortcut($shortcut)->getName(), $value);
@@ -155,14 +158,14 @@ class ArrayInput extends Input
     private function addLongOption($name, $value)
     {
         if (!$this->definition->hasOption($name)) {
-            throw new \InvalidArgumentException(sprintf('The "--%s" option does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "--%s" option does not exist.', $name));
         }
 
         $option = $this->definition->getOption($name);
 
         if (null === $value) {
             if ($option->isValueRequired()) {
-                throw new \InvalidArgumentException(sprintf('The "--%s" option requires a value.', $name));
+                throw new InvalidArgumentException(sprintf('The "--%s" option requires a value.', $name));
             }
 
             $value = $option->isValueOptional() ? $option->getDefault() : true;
@@ -182,7 +185,7 @@ class ArrayInput extends Input
     private function addArgument($name, $value)
     {
         if (!$this->definition->hasArgument($name)) {
-            throw new \InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
+            throw new InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
         }
 
         $this->arguments[$name] = $value;

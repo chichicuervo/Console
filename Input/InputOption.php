@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Input;
+// namespace Symfony\Component\Console\Input;
 
 /**
  * Represents a command line option.
@@ -18,7 +21,7 @@ namespace Symfony\Component\Console\Input;
  *
  * @api
  */
-class InputOption
+class Console_Input_InputOption
 {
     const VALUE_NONE     = 1;
     const VALUE_REQUIRED = 2;
@@ -63,7 +66,7 @@ class InputOption
         if (null === $mode) {
             $mode = self::VALUE_NONE;
         } else if (!is_int($mode) || $mode > 15) {
-            throw new \InvalidArgumentException(sprintf('Option mode "%s" is not valid.', $mode));
+            throw new InvalidArgumentException(sprintf('Option mode "%s" is not valid.', $mode));
         }
 
         $this->name        = $name;
@@ -72,7 +75,7 @@ class InputOption
         $this->description = $description;
 
         if ($this->isArray() && !$this->acceptValue()) {
-            throw new \InvalidArgumentException('Impossible to have an option mode VALUE_IS_ARRAY if the option does not accept a value.');
+            throw new InvalidArgumentException('Impossible to have an option mode VALUE_IS_ARRAY if the option does not accept a value.');
         }
 
         $this->setDefault($default);
@@ -146,14 +149,14 @@ class InputOption
     public function setDefault($default = null)
     {
         if (self::VALUE_NONE === (self::VALUE_NONE & $this->mode) && null !== $default) {
-            throw new \LogicException('Cannot set a default value when using Option::VALUE_NONE mode.');
+            throw new LogicException('Cannot set a default value when using Option::VALUE_NONE mode.');
         }
 
         if ($this->isArray()) {
             if (null === $default) {
                 $default = array();
             } elseif (!is_array($default)) {
-                throw new \LogicException('A default value for an array option must be an array.');
+                throw new LogicException('A default value for an array option must be an array.');
             }
         }
 
