@@ -85,7 +85,7 @@ class Console_Application
         $this->add(new Console_Command_ListCommand());
 
         $this->definition = new Console_Input_InputDefinition(array(
-            new Console_Input_InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
+            new Console_Input_InputArgument('command', Console_Input_InputArgument::REQUIRED, 'The command to execute'),
 
             new Console_Input_InputOption('--help',           '-h', Console_Input_InputOption::VALUE_NONE, 'Display this help message.'),
             new Console_Input_InputOption('--quiet',          '-q', Console_Input_InputOption::VALUE_NONE, 'Do not output any message.'),
