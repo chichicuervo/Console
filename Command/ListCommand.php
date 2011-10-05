@@ -7,23 +7,26 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Command;
+// namespace Symfony\Component\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
-use Symfony\Component\Console\Command\Command;
+// use Symfony\Component\Console\Input\InputArgument;
+// use Symfony\Component\Console\Input\InputOption;
+// use Symfony\Component\Console\Input\InputInterface;
+// use Symfony\Component\Console\Output\OutputInterface;
+// use Symfony\Component\Console\Output\Output;
+// use Symfony\Component\Console\Command\Command;
 
 /**
  * ListCommand displays the list of all available commands for the application.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ListCommand extends Command
+class Console_Command_ListCommand extends Console_Command_Command
 {
     /**
      * {@inheritdoc}
@@ -32,8 +35,8 @@ class ListCommand extends Command
     {
         $this
             ->setDefinition(array(
-                new InputArgument('namespace', InputArgument::OPTIONAL, 'The namespace name'),
-                new InputOption('xml', null, InputOption::VALUE_NONE, 'To output help as XML'),
+                new Console_Input_InputArgument('namespace', Console_Input_InputArgument::OPTIONAL, 'The namespace name'),
+                new Console_Input_InputOption('xml', null, Console_Input_InputOption::VALUE_NONE, 'To output help as XML'),
             ))
             ->setName('list')
             ->setDescription('Lists commands')
@@ -56,10 +59,10 @@ EOF
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(Console_Input_InputInterface $input, Console_Output_OutputInterface $output)
     {
         if ($input->getOption('xml')) {
-            $output->writeln($this->getApplication()->asXml($input->getArgument('namespace')), OutputInterface::OUTPUT_RAW);
+            $output->writeln($this->getApplication()->asXml($input->getArgument('namespace')), Console_Output_OutputInterface::OUTPUT_RAW);
         } else {
             $output->writeln($this->getApplication()->asText($input->getArgument('namespace')));
         }

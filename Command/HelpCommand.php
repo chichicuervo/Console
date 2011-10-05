@@ -7,23 +7,26 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Command;
+// namespace Symfony\Component\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
-use Symfony\Component\Console\Command\Command;
+// use Symfony\Component\Console\Input\InputArgument;
+// use Symfony\Component\Console\Input\InputOption;
+// use Symfony\Component\Console\Input\InputInterface;
+// use Symfony\Component\Console\Output\OutputInterface;
+// use Symfony\Component\Console\Output\Output;
+// use Symfony\Component\Console\Command\Command;
 
 /**
  * HelpCommand displays the help for a given command.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class HelpCommand extends Command
+class Console_Command_HelpCommand extends Console_Command_Command
 {
     private $command;
 
@@ -36,8 +39,8 @@ class HelpCommand extends Command
 
         $this
             ->setDefinition(array(
-                new InputArgument('command_name', InputArgument::OPTIONAL, 'The command name', 'help'),
-                new InputOption('xml', null, InputOption::VALUE_NONE, 'To output help as XML'),
+                new Console_Input_InputArgument('command_name', Console_Input_InputArgument::OPTIONAL, 'The command name', 'help'),
+                new Console_Input_InputOption('xml', null, Console_Input_InputOption::VALUE_NONE, 'To output help as XML'),
             ))
             ->setName('help')
             ->setDescription('Displays help for a command')
@@ -58,7 +61,7 @@ EOF
      *
      * @param Command $command The command to set
      */
-    public function setCommand(Command $command)
+    public function setCommand(Console_Command_Command $command)
     {
         $this->command = $command;
     }
@@ -66,14 +69,14 @@ EOF
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(Console_Input_InputInterface $input, Console_Output_OutputInterface $output)
     {
         if (null === $this->command) {
             $this->command = $this->getApplication()->get($input->getArgument('command_name'));
         }
 
         if ($input->getOption('xml')) {
-            $output->writeln($this->command->asXml(), OutputInterface::OUTPUT_RAW);
+            $output->writeln($this->command->asXml(), Console_Output_OutputInterface::OUTPUT_RAW);
         } else {
             $output->writeln($this->command->asText());
         }
