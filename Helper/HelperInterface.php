@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Helper;
+// namespace Symfony\Component\Console\Helper;
 
 /**
  * HelperInterface is the interface all helpers must implement.
@@ -18,7 +21,7 @@ namespace Symfony\Component\Console\Helper;
  *
  * @api
  */
-interface HelperInterface
+interface Console_Helper_HelperInterface
 {
     /**
      * Sets the helper set associated with this helper.
@@ -27,7 +30,7 @@ interface HelperInterface
      *
      * @api
      */
-    function setHelperSet(HelperSet $helperSet = null);
+    function setHelperSet(Console_Helper_HelperSet $helperSet = null);
 
     /**
      * Gets the helper set associated with this helper.

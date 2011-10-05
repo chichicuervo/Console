@@ -7,16 +7,19 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Helper;
+// namespace Symfony\Component\Console\Helper;
 
 /**
  * The Formatter class provides helpers to format messages.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class FormatterHelper extends Helper
+class Console_Helper_FormatterHelper extends Console_Helper_Helper
 {
     /**
      * Formats a message within a section.

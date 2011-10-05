@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
 namespace Symfony\Component\Console\Helper;

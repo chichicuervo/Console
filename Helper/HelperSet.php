@@ -7,18 +7,21 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Helper;
+// namespace Symfony\Component\Console\Helper;
 
-use Symfony\Component\Console\Command\Command;
+// use Symfony\Component\Console\Command\Command;
 
 /**
  * HelperSet represents a set of helpers to be used with a command.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class HelperSet
+class Console_Helper_HelperSet
 {
     private $helpers;
     private $command;
@@ -40,7 +43,7 @@ class HelperSet
      * @param HelperInterface $helper The helper instance
      * @param string          $alias  An alias
      */
-    public function set(HelperInterface $helper, $alias = null)
+    public function set(Console_Helper_HelperInterface $helper, $alias = null)
     {
         $this->helpers[$helper->getName()] = $helper;
         if (null !== $alias) {
@@ -74,7 +77,7 @@ class HelperSet
     public function get($name)
     {
         if (!$this->has($name)) {
-            throw new \InvalidArgumentException(sprintf('The helper "%s" is not defined.', $name));
+            throw new InvalidArgumentException(sprintf('The helper "%s" is not defined.', $name));
         }
 
         return $this->helpers[$name];
@@ -85,7 +88,7 @@ class HelperSet
      *
      * @param Command $command A Command instance
      */
-    public function setCommand(Command $command = null)
+    public function setCommand(Console_Command_Command $command = null)
     {
         $this->command = $command;
     }

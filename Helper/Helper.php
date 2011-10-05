@@ -7,16 +7,19 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Helper;
+// namespace Symfony\Component\Console\Helper;
 
 /**
  * Helper is the base class for all helper classes.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-abstract class Helper implements HelperInterface
+abstract class Console_Helper_Helper implements Console_Helper_HelperInterface
 {
     protected $helperSet = null;
 
@@ -25,7 +28,7 @@ abstract class Helper implements HelperInterface
      *
      * @param HelperSet $helperSet A HelperSet instance
      */
-    public function setHelperSet(HelperSet $helperSet = null)
+    public function setHelperSet(Console_Helper_HelperSet $helperSet = null)
     {
         $this->helperSet = $helperSet;
     }
