@@ -7,11 +7,14 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Output;
+// namespace Symfony\Component\Console\Output;
 
-use Symfony\Component\Console\Formatter\OutputFormatter;
+// use Symfony\Component\Console\Formatter\OutputFormatter;
 
 /**
  * StreamOutput writes the output to a given stream.
@@ -28,7 +31,7 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
  *
  * @api
  */
-class StreamOutput extends Output
+class Console_Output_StreamOutput extends Console_Output_Output
 {
     private $stream;
 
@@ -45,10 +48,10 @@ class StreamOutput extends Output
      *
      * @api
      */
-    public function __construct($stream, $verbosity = self::VERBOSITY_NORMAL, $decorated = null, OutputFormatter $formatter = null)
+    public function __construct($stream, $verbosity = self::VERBOSITY_NORMAL, $decorated = null, Console_Formatter_OutputFormatter $formatter = null)
     {
         if (!is_resource($stream) || 'stream' !== get_resource_type($stream)) {
-            throw new \InvalidArgumentException('The StreamOutput class needs a stream as its first argument.');
+            throw new InvalidArgumentException('The StreamOutput class needs a stream as its first argument.');
         }
 
         $this->stream = $stream;
@@ -83,7 +86,7 @@ class StreamOutput extends Output
         if (false === @fwrite($this->stream, $message.($newline ? PHP_EOL : ''))) {
             // @codeCoverageIgnoreStart
             // should never happen
-            throw new \RuntimeException('Unable to write output.');
+            throw new RuntimeException('Unable to write output.');
             // @codeCoverageIgnoreEnd
         }
 

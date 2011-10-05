@@ -7,11 +7,14 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Output;
+// namespace Symfony\Component\Console\Output;
 
-use Symfony\Component\Console\Formatter\OutputFormatter;
+// use Symfony\Component\Console\Formatter\OutputFormatter;
 
 /**
  * ConsoleOutput is the default class for all CLI output. It uses STDOUT.
@@ -28,7 +31,7 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
  *
  * @api
  */
-class ConsoleOutput extends StreamOutput
+class Console_Output_ConsoleOutput extends Console_Output_StreamOutput
 {
     /**
      * Constructor.
@@ -40,7 +43,7 @@ class ConsoleOutput extends StreamOutput
      *
      * @api
      */
-    public function __construct($verbosity = self::VERBOSITY_NORMAL, $decorated = null, OutputFormatter $formatter = null)
+    public function __construct($verbosity = self::VERBOSITY_NORMAL, $decorated = null, Console_Formatter_OutputFormatter $formatter = null)
     {
         parent::__construct(fopen('php://stdout', 'w'), $verbosity, $decorated, $formatter);
     }

@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Output;
+// namespace Symfony\Component\Console\Output;
 
 /**
  * NullOutput suppresses all output.
@@ -20,7 +23,7 @@ namespace Symfony\Component\Console\Output;
  *
  * @api
  */
-class NullOutput extends Output
+class Console_Output_NullOutput extends Console_Output_Output
 {
     /**
      * Writes a message to the output.

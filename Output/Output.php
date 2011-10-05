@@ -7,12 +7,15 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Output;
+// namespace Symfony\Component\Console\Output;
 
-use Symfony\Component\Console\Formatter\OutputFormatterInterface;
-use Symfony\Component\Console\Formatter\OutputFormatter;
+// use Symfony\Component\Console\Formatter\OutputFormatterInterface;
+// use Symfony\Component\Console\Formatter\OutputFormatter;
 
 /**
  * Base class for output classes.
@@ -27,7 +30,7 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
  *
  * @api
  */
-abstract class Output implements OutputInterface
+abstract class Console_Output_Output implements Console_Output_OutputInterface
 {
     private $verbosity;
     private $formatter;
@@ -41,10 +44,10 @@ abstract class Output implements OutputInterface
      *
      * @api
      */
-    public function __construct($verbosity = self::VERBOSITY_NORMAL, $decorated = null, OutputFormatterInterface $formatter = null)
+    public function __construct($verbosity = self::VERBOSITY_NORMAL, $decorated = null, Console_Formatter_OutputFormatterInterface $formatter = null)
     {
         if (null === $formatter) {
-            $formatter = new OutputFormatter();
+            $formatter = new Console_Formatter_OutputFormatter();
         }
 
         $this->verbosity = null === $verbosity ? self::VERBOSITY_NORMAL : $verbosity;
@@ -59,7 +62,7 @@ abstract class Output implements OutputInterface
      *
      * @api
      */
-    public function setFormatter(OutputFormatterInterface $formatter)
+    public function setFormatter(Console_Formatter_OutputFormatterInterface $formatter)
     {
         $this->formatter = $formatter;
     }
@@ -167,7 +170,7 @@ abstract class Output implements OutputInterface
                     $message = strip_tags($this->formatter->format($message));
                     break;
                 default:
-                    throw new \InvalidArgumentException(sprintf('Unknown output type given (%s)', $type));
+                    throw new InvalidArgumentException(sprintf('Unknown output type given (%s)', $type));
             }
 
             $this->doWrite($message, $newline);

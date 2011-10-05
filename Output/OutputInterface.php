@@ -7,11 +7,14 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Output;
+// namespace Symfony\Component\Console\Output;
 
-use Symfony\Component\Console\Formatter\OutputFormatterInterface;
+// use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
 /**
  * OutputInterface is the interface implemented by all Output classes.
@@ -20,7 +23,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  *
  * @api
  */
-interface OutputInterface
+interface Console_Output_OutputInterface
 {
     const VERBOSITY_QUIET   = 0;
     const VERBOSITY_NORMAL  = 1;
@@ -96,7 +99,7 @@ interface OutputInterface
      *
      * @api
      */
-    function setFormatter(OutputFormatterInterface $formatter);
+    function setFormatter(Console_Formatter_OutputFormatterInterface $formatter);
 
     /**
      * Returns current output formatter instance.
