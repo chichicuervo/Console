@@ -266,7 +266,7 @@ class Console_Input_InputDefinition
      *
      * @api
      */
-    public function addOption(InputOption $option)
+    public function addOption(Console_Input_InputOption $option)
     {
         if (isset($this->options[$option->getName()])) {
             throw new LogicException(sprintf('An option named "%s" already exist.', $option->getName()));
