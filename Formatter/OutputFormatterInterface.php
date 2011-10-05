@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Formatter;
+// namespace Symfony\Component\Console\Formatter;
 
 /**
  * Formatter interface for console output.
@@ -18,7 +21,7 @@ namespace Symfony\Component\Console\Formatter;
  *
  * @api
  */
-interface OutputFormatterInterface
+interface Console_Formatter_OutputFormatterInterface
 {
     /**
      * Sets the decorated flag.
@@ -46,7 +49,7 @@ interface OutputFormatterInterface
      *
      * @api
      */
-    function setStyle($name, OutputFormatterStyleInterface $style);
+    function setStyle($name, Console_Formatter_OutputFormatterStyleInterface $style);
 
     /**
      * Checks if output formatter has style with specified name.

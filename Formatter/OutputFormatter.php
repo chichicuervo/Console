@@ -7,9 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ * 
+ * Backported for php5.2 by Jason Belich <jason@belich.com>
+ * 
  */
 
-namespace Symfony\Component\Console\Formatter;
+// namespace Symfony\Component\Console\Formatter;
 
 /**
  * Formatter class for console output.
@@ -18,7 +21,7 @@ namespace Symfony\Component\Console\Formatter;
  *
  * @api
  */
-class OutputFormatter implements OutputFormatterInterface
+class Console_Formatter_OutputFormatter implements Console_Formatter_OutputFormatterInterface
 {
     /**
      * The pattern to phrase the format.
@@ -40,10 +43,10 @@ class OutputFormatter implements OutputFormatterInterface
     {
         $this->decorated = (Boolean) $decorated;
 
-        $this->setStyle('error',    new OutputFormatterStyle('white', 'red'));
-        $this->setStyle('info',     new OutputFormatterStyle('green'));
-        $this->setStyle('comment',  new OutputFormatterStyle('yellow'));
-        $this->setStyle('question', new OutputFormatterStyle('black', 'cyan'));
+        $this->setStyle('error',    new Console_Formatter_OutputFormatterStyle('white', 'red'));
+        $this->setStyle('info',     new Console_Formatter_OutputFormatterStyle('green'));
+        $this->setStyle('comment',  new Console_Formatter_OutputFormatterStyle('yellow'));
+        $this->setStyle('question', new Console_Formatter_OutputFormatterStyle('black', 'cyan'));
 
         foreach ($styles as $name => $style) {
             $this->setStyle($name, $style);
@@ -82,7 +85,7 @@ class OutputFormatter implements OutputFormatterInterface
      *
      * @api
      */
-    public function setStyle($name, OutputFormatterStyleInterface $style)
+    public function setStyle($name, Console_Formatter_OutputFormatterStyleInterface $style)
     {
         $this->styles[strtolower($name)] = $style;
     }
@@ -113,7 +116,7 @@ class OutputFormatter implements OutputFormatterInterface
     public function getStyle($name)
     {
         if (!$this->hasStyle($name)) {
-            throw new \InvalidArgumentException('Undefined style: '.$name);
+            throw new InvalidArgumentException('Undefined style: '.$name);
         }
 
         return $this->styles[strtolower($name)];
@@ -172,7 +175,7 @@ class OutputFormatter implements OutputFormatterInterface
             return false;
         }
 
-        $style = new OutputFormatterStyle();
+        $style = new Console_Formatter_OutputFormatterStyle();
         foreach ($matches as $match) {
             array_shift($match);
 
