@@ -106,7 +106,7 @@ class Console_Shell
         // options and arguments?
         try {
             $command = $this->application->find(substr($text, 0, strpos($text, ' ')));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return true;
         }
 

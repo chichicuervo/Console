@@ -29,7 +29,7 @@
  *
  * @api
  */
-class Command
+class Console_Command_Command
 {
     private $application;
     private $name;
@@ -54,7 +54,7 @@ class Command
      */
     public function __construct($name = null)
     {
-        $this->definition = new InputDefinition();
+        $this->definition = new Console_Input_InputDefinition();
         $this->ignoreValidationErrors = false;
         $this->applicationDefinitionMerged = false;
         $this->aliases = array();
@@ -66,7 +66,7 @@ class Command
         $this->configure();
 
         if (!$this->name) {
-            throw new \LogicException('The command name cannot be empty.');
+            throw new LogicException('The command name cannot be empty.');
         }
     }
 
@@ -77,7 +77,7 @@ class Command
      *
      * @api
      */
-    public function setApplication(Application $application = null)
+    public function setApplication(Console_Application $application = null)
     {
         $this->application = $application;
         if ($application) {
@@ -92,7 +92,7 @@ class Command
      *
      * @param HelperSet $helperSet A HelperSet instance
      */
-    public function setHelperSet(HelperSet $helperSet)
+    public function setHelperSet(Console_Helper_HelperSet $helperSet)
     {
         $this->helperSet = $helperSet;
     }
@@ -142,9 +142,9 @@ class Command
      * @throws \LogicException When this abstract method is not implemented
      * @see    setCode()
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(Console_Input_InputInterface $input, Console_Output_OutputInterface $output)
     {
-        throw new \LogicException('You must override the execute() method in the concrete command class.');
+        throw new LogicException('You must override the execute() method in the concrete command class.');
     }
 
     /**
@@ -153,7 +153,7 @@ class Command
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(Console_Input_InputInterface $input, Console_Output_OutputInterface $output)
     {
     }
 
@@ -166,7 +166,7 @@ class Command
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(Console_Input_InputInterface $input, Console_Output_OutputInterface $output)
     {
     }
 
@@ -185,7 +185,7 @@ class Command
      *
      * @api
      */
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(Console_Input_InputInterface $input, Console_Output_OutputInterface $output)
     {
         // force the creation of the synopsis before the merge with the app definition
         $this->getSynopsis();
@@ -196,7 +196,7 @@ class Command
         // bind the input against the command specific arguments/options
         try {
             $input->bind($this->definition);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if (!$this->ignoreValidationErrors) {
                 throw $e;
             }
@@ -231,12 +231,12 @@ class Command
      *
      * @api
      */
-    public function setCode(\Closure $code)
-    {
-        $this->code = $code;
+//     public function setCode(\Closure $code)
+//     {
+//         $this->code = $code;
 
-        return $this;
-    }
+//         return $this;
+//     }
 
     /**
      * Merges the application definition with the command definition.
@@ -268,7 +268,7 @@ class Command
      */
     public function setDefinition($definition)
     {
-        if ($definition instanceof InputDefinition) {
+        if ($definition instanceof Console_Input_InputDefinition) {
             $this->definition = $definition;
         } else {
             $this->definition->setDefinition($definition);
@@ -305,7 +305,7 @@ class Command
      */
     public function addArgument($name, $mode = null, $description = '', $default = null)
     {
-        $this->definition->addArgument(new InputArgument($name, $mode, $description, $default));
+        $this->definition->addArgument(new Console_Input_InputArgument($name, $mode, $description, $default));
 
         return $this;
     }
@@ -325,7 +325,7 @@ class Command
      */
     public function addOption($name, $shortcut = null, $mode = null, $description = '', $default = null)
     {
-        $this->definition->addOption(new InputOption($name, $shortcut, $mode, $description, $default));
+        $this->definition->addOption(new Console_Input_InputOption($name, $shortcut, $mode, $description, $default));
 
         return $this;
     }
@@ -543,7 +543,7 @@ class Command
      */
     public function asXml($asDom = false)
     {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
         $dom->appendChild($commandXML = $dom->createElement('command'));
         $commandXML->setAttribute('id', $this->name);
@@ -575,7 +575,7 @@ class Command
     private function validateName($name)
     {
         if (!preg_match('/^[^\:]+(\:[^\:]+)*$/', $name)) {
-            throw new \InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
+            throw new InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
         }
     }
 }

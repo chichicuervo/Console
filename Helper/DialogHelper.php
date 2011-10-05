@@ -12,16 +12,16 @@
  * 
  */
 
-namespace Symfony\Component\Console\Helper;
+// namespace Symfony\Component\Console\Helper;
 
-use Symfony\Component\Console\Output\OutputInterface;
+// use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * The Dialog class provides helpers to interact with the user.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class DialogHelper extends Helper
+class Console_Helper_DialogHelper extends Console_Helper_Helper
 {
     private $inputStream;
 
@@ -34,13 +34,13 @@ class DialogHelper extends Helper
      *
      * @return string The user answer
      */
-    public function ask(OutputInterface $output, $question, $default = null)
+    public function ask(Console_Output_OutputInterface $output, $question, $default = null)
     {
         $output->write($question);
 
-        $ret = fgets($this->inputStream ?: STDIN, 4096);
+        $ret = fgets($this->inputStream ? $this->inputStream : STDIN, 4096);
         if (false === $ret) {
-            throw new \RuntimeException('Aborted');
+            throw new RuntimeException('Aborted');
         }
         $ret = trim($ret);
 
@@ -58,7 +58,7 @@ class DialogHelper extends Helper
      *
      * @return Boolean true if the user has confirmed, false otherwise
      */
-    public function askConfirmation(OutputInterface $output, $question, $default = true)
+    public function askConfirmation(Console_Output_OutputInterface $output, $question, $default = true)
     {
         $answer = 'z';
         while ($answer && !in_array(strtolower($answer[0]), array('y', 'n'))) {
@@ -89,7 +89,7 @@ class DialogHelper extends Helper
      *
      * @throws \Exception When any of the validator returns an error
      */
-    public function askAndValidate(OutputInterface $output, $question, $validator, $attempts = false, $default = null)
+    public function askAndValidate(Console_Output_OutputInterface $output, $question, $validator, $attempts = false, $default = null)
     {
         $error = null;
         while (false === $attempts || $attempts--) {
@@ -101,7 +101,7 @@ class DialogHelper extends Helper
 
             try {
                 return call_user_func($validator, $value);
-            } catch (\Exception $error) {
+            } catch (Exception $error) {
             }
         }
 

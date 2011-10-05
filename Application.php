@@ -483,12 +483,11 @@ class Console_Application
         }
 
         $found = array();
-        foreach (explode(':', $namespace) as $i => $part) {
+        foreach (explode(':', $namespace) as $this->_i => $part) {
             
-        	// TODO - turn closure into lambda
-        	
-        	$abbrevs = self::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i) { return isset($p[$i]) ? $p[$i] : ''; }, $allNamespaces)))));
-
+//         	$abbrevs = self::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i) { return isset($p[$i]) ? $p[$i] : ''; }, $allNamespaces)))));
+        	$abbrevs = self::getAbbreviations(array_unique(array_values(array_filter(array_map(array($this, 'fnsCb'), $allNamespaces)))));
+        	 
             if (!isset($abbrevs[$part])) {
                 throw new InvalidArgumentException(sprintf('There are no commands defined in the "%s" namespace.', $namespace));
             }
@@ -503,6 +502,14 @@ class Console_Application
         return implode(':', $found);
     }
 
+    private $_i = 0;
+    
+    private function fnsCb(array $p)
+    {
+    	return isset($p[$this->_i]) ? $p[$this->_i] : '';
+    }
+    
+    
     /**
      * Finds a command by name or alias.
      *
