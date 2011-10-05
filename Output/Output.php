@@ -164,12 +164,12 @@ abstract class Console_Output_Output implements Console_Output_OutputInterface
 
         foreach ($messages as $message) {
             switch ($type) {
-                case OutputInterface::OUTPUT_NORMAL:
+                case Console_Output_OutputInterface::OUTPUT_NORMAL:
                     $message = $this->formatter->format($message);
                     break;
-                case OutputInterface::OUTPUT_RAW:
+                case Console_Output_OutputInterface::OUTPUT_RAW:
                     break;
-                case OutputInterface::OUTPUT_PLAIN:
+                case Console_Output_OutputInterface::OUTPUT_PLAIN:
                     $message = strip_tags($this->formatter->format($message));
                     break;
                 default:
