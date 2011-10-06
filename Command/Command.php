@@ -233,12 +233,16 @@ class Console_Command_Command
      *
      * @api
      */
-//     public function setCode(\Closure $code)
-//     {
-//         $this->code = $code;
+    public function setCode($code)
+    {
+    	if (!is_callable($code)) {
+    		throw new InvalidArgumentException('code is not a valid callback');	
+    	}
+    	
+        $this->code = $code;
 
-//         return $this;
-//     }
+        return $this;
+    }
 
     /**
      * Merges the application definition with the command definition.
