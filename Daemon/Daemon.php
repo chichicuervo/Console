@@ -125,7 +125,7 @@ class Console_Daemon_Daemon extends Console_Command_Command
 				$statusCode = is_numeric($statusCode) && $statusCode ? $statusCode : 1;
 			}
 				
-		} while ($this->proceed($statusCode, $input, $output));
+		} while ($this->doProceed($statusCode, $input, $output));
 
 		return $statusCode;
 	}
